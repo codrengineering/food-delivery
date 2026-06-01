@@ -243,7 +243,7 @@ input,textarea{width:100%;padding:10px;margin:10px 0;border:1px solid #ddd;borde
 <div class="floating-cart" id="floating-cart" onclick="showCart()">🛒 <span id="cart-count">0</span></div>
 <div class="modal" id="modal"><div class="modal-content"><span class="close" onclick="closeModal()">&times;</span><h2>Order Details</h2><div id="modal-content"></div></div></div>
 <script>
-const slug=location.pathname.split('/').pop();
+const slug=new URLSearchParams(location.search).get('restaurant') || location.pathname.split('/').pop();
 let cart=[],restaurant=null,menu=[];
 async function loadRestaurant(){const res=await fetch('/api/restaurants/'+slug);restaurant=await res.json();document.getElementById('header').innerHTML='<h1>'+restaurant.name+'</h1><div>Free delivery over KES '+restaurant.free_delivery_threshold+'</div>';}
 async function loadMenu(){const res=await fetch('/api/restaurants/'+slug+'/menu');menu=await res.json();document.getElementById('menu').innerHTML=menu.map(i=>'<div class="menu-item"><div><b>'+i.item_name+'</b><br>KES '+i.price+(i.item_description?'<br><small>'+i.item_description+'</small>':'')+'</div><button onclick="addToCart('+i.id+')">Add</button></div>').join('');}
