@@ -33,13 +33,13 @@
         if(!slug){location.href='/register.html'}
         
         async function loadRestaurant(){
-            const res=await fetch(`/api/restaurants/${slug}`);
+            const res=await fetch(`https://food-delivery-app.leads-automation.workers.dev/api/restaurants/${slug}`);
             const data=await res.json();
             document.getElementById('restaurant-name').innerText=data.name;
         }
         
         async function loadMenu(){
-            const res=await fetch(`/api/restaurants/${slug}/menu`);
+            const res=await fetch(`https://food-delivery-app.leads-automation.workers.dev/api/restaurants/${slug}/menu`);
             const items=await res.json();
             document.getElementById('menu-list').innerHTML=items.map(i=>`<div class="menu-item"><div><b>${i.item_name}</b> KES ${i.price}<br><small>${i.item_description||''}</small></div><div><button onclick="toggleItem(${i.id})">${i.is_available?'Disable':'Enable'}</button><button onclick="deleteItem(${i.id})" style="background:#ff4444">Delete</button></div></div>`).join('');
         }
@@ -49,24 +49,24 @@
             const desc=document.getElementById('item-desc').value;
             const price=parseFloat(document.getElementById('item-price').value);
             if(!name||!price) return alert('Name and price required');
-            await fetch('/api/menu-items',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({restaurant_id:slug,item_name:name,item_description:desc,price:price,category:'Main'})});
+            await fetch('https://food-delivery-app.leads-automation.workers.dev/api/menu-items',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({restaurant_id:slug,item_name:name,item_description:desc,price:price,category:'Main'})});
             document.getElementById('item-name').value='';
             document.getElementById('item-desc').value='';
             document.getElementById('item-price').value='';
             loadMenu();
         }
         
-        async function toggleItem(id){ await fetch(`/api/menu-items/${id}/toggle`,{method:'PUT'}); loadMenu(); }
-        async function deleteItem(id){ if(confirm('Delete?')) await fetch(`/api/menu-items/${id}`,{method:'DELETE'}); loadMenu(); }
+        async function toggleItem(id){ await fetch(`https://food-delivery-app.leads-automation.workers.dev/api/menu-items/${id}/toggle`,{method:'PUT'}); loadMenu(); }
+        async function deleteItem(id){ if(confirm('Delete?')) await fetch(`https://food-delivery-app.leads-automation.workers.dev/api/menu-items/${id}`,{method:'DELETE'}); loadMenu(); }
         
         async function loadOrders(){
-            const res=await fetch(`/api/restaurants/${slug}/orders`);
+            const res=await fetch(`https://food-delivery-app.leads-automation.workers.dev/api/restaurants/${slug}/orders`);
             const orders=await res.json();
             document.getElementById('orders-list').innerHTML=orders.map(o=>`<div class="order-card"><b>${o.customer_name}</b> 📞${o.customer_phone}<br>📍${o.what3words}<br>💰KES ${o.total}<br>${o.items.map(i=>`${i.item_name} x${i.quantity}`).join(', ')}<br><div>${!o.payment_confirmed?`<button onclick="confirmPayment('${o.id}')">Confirm Payment</button>`:''}${o.status==='pending'?`<button onclick="updateStatus('${o.id}','cooking')">Start Cooking</button>`:''}<a href="https://maps.google.com/?q=///${o.what3words}" target="_blank">Open Maps</a></div></div>`).join('');
         }
         
-        async function confirmPayment(id){ await fetch(`/api/orders/${id}/payment`,{method:'PUT'}); loadOrders(); }
-        async function updateStatus(id,status){ await fetch(`/api/orders/${id}/status`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})}); loadOrders(); }
+        async function confirmPayment(id){ await fetch(`https://food-delivery-app.leads-automation.workers.dev/api/orders/${id}/payment`,{method:'PUT'}); loadOrders(); }
+        async function updateStatus(id,status){ await fetch(`https://food-delivery-app.leads-automation.workers.dev/api/orders/${id}/status`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})}); loadOrders(); }
         
         function showTab(tab){
             document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));

@@ -41,7 +41,7 @@
                 free_delivery_threshold: parseFloat(document.getElementById('free_threshold').value)
             };
             try {
-                const res = await fetch('/api/restaurants', {
+                const res = await fetch('https://food-delivery-app.leads-automation.workers.dev/api/restaurants', {
                     method: 'POST',
                     headers: {'Content-Type':'application/json'},
                     body: JSON.stringify(data)
