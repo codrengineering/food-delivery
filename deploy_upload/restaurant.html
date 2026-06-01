@@ -30,13 +30,13 @@
         let cart = [], restaurant = null, menu = [];
         
         async function loadRestaurant(){
-            const res=await fetch(`https://food-delivery-app.leads-automation.workers.dev/api/restaurants/${slug}`);
+            const res=await fetch(`https://food-delivery.leads-automation.workers.dev/api/restaurants/${slug}`);
             restaurant=await res.json();
             document.getElementById('header').innerHTML=`<h1>${restaurant.name}</h1><div>Free delivery over KES ${restaurant.free_delivery_threshold}</div>`;
         }
         
         async function loadMenu(){
-            const res=await fetch(`https://food-delivery-app.leads-automation.workers.dev/api/restaurants/${slug}/menu`);
+            const res=await fetch(`https://food-delivery.leads-automation.workers.dev/api/restaurants/${slug}/menu`);
             menu=await res.json();
             document.getElementById('menu').innerHTML=menu.map(i=>`<div class="menu-item"><div><b>${i.item_name}</b><br>KES ${i.price}${i.item_description?`<br><small>${i.item_description}</small>`:''}</div><button onclick="addToCart(${i.id})">Add</button></div>`).join('');
         }
@@ -84,7 +84,7 @@
             if(!name||!phone||!w3w) return alert('Fill all fields');
             const orderId='ORD'+Date.now()+Math.floor(Math.random()*1000);
             const order={orderId,restaurant_id:slug,customer_name:name,customer_phone:phone,items:cart.map(i=>({item_name:i.item_name,quantity:i.quantity,price:i.price})),subtotal:cart.reduce((s,i)=>s+i.price*i.quantity,0),delivery_fee:delivery,total:total,what3words:w3w,special_instructions:document.getElementById('instructions').value};
-            const res=await fetch('https://food-delivery-app.leads-automation.workers.dev/api/orders',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(order)});
+            const res=await fetch('https://food-delivery.leads-automation.workers.dev/api/orders',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(order)});
             const result=await res.json();
             if(result.success){
                 alert(`Order placed!\nOrder: ${orderId}\nTotal: KES ${total}\n\nM-PESA Payment:\nPaybill: ${restaurant.paybill||'123456'}\nAccount: ${orderId}`);
