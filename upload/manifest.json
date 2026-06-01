@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "files": {
+    "register.html": {
+      "hash": "",
+      "contentType": "text/html"
+    },
+    "dashboard.html": {
+      "hash": "",
+      "contentType": "text/html"
+    },
+    "restaurant.html": {
+      "hash": "",
+      "contentType": "text/html"
+    }
+  }
+}

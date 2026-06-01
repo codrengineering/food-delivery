@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "include": ["*.html"],
+  "files": {
+    "register.html": {
+      "hash": "32bc1924de485f637e0b14cfafbaa48ade9b1e34d0a134dcfa1acb494fdd2395",
+      "contentType": "text/html"
+    },
+    "dashboard.html": {
+      "hash": "5a373e293e629c24547bac6556f7edcce5deb1a45eab012ad58a586ab1ced551",
+      "contentType": "text/html"
+    },
+    "restaurant.html": {
+      "hash": "95a6b68b4a3e6451fabc4a43bdfac49024e7bc7230110b9471bb0c760af0da2c",
+      "contentType": "text/html"
+    }
+  }
+}
