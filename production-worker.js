@@ -114,7 +114,7 @@ export default {
 
     // Redirect root to register
     if (path === '/') {
-      return Response.redirect('/register.html', 302);
+      return new Response(null, {status: 302, headers: {Location: '/register.html'}});
     }
 
     return new Response('Not found', { status: 404 });
